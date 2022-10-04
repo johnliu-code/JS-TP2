@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3.2 Traitement d’un formulaire</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <style>
+        .hide{
+            display: none;
+        }
+        .bgcolor{
+            background: lime;
+        }
+
+        #facture {
+            border: 1px solid #193cc8!important;
+            color:#193cc8;
+            padding: 50px!important;
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px!important;
+        }
+        #facture p {
+            font-style: oblique;
+            font-weight: 500!important;
+        }
+        #facture th {
+            color:#193cc8;
+            font-size: 20px!important;
+            border-bottom: 1px solid #193cc8;
+        }
+
+        #facture td {
+            color:#193cc8;
+            border-bottom: 1px dashed #193cc8;
+        }
+
+        #facture-2 {
+            background-image: url(./images/bg1.jpg);
+            background-size: cover;
+            background-repeat: no-repeat;
+            padding: 40px!important;
+            box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px!important;
+            border-style: none!important;
+            transition: transform 1s;
+        }
+        #facture-2 th,  #facture-2 td {
+            border-bottom: 1px solid #ffffff;
+        }
+
+        #facture-2 p {
+            font-style: italic;
+            font-weight: 700!important;
+        }
+
+        #facture-2:hover {
+            transform: translate(10px, 10px);
+        }
+
+
+    </style>
+</head>
+<body>
+<!---------------Client info----------------->  
+    <div class="container mt-5">
+        <h4 class="mb-3">Facture achat ordinateur portable</h4>
+        <form class="needs-validation" novalidate="">
+            <div id="infopart">
+                <div class="row g-3">
+                    <div class="col-sm-6">
+                        <label for="Nom complet" class="form-label">Nom complet <span class="text-muted">(Requred)</span></label>
+                        <input type="text" class="form-control" id="fullname" placeholder="Nom complet" value="" required="true">
+                    </div>
+    
+                    <div class="col-sm-6">
+                        <label for="postcode" class="form-label">Code postal <span class="text-muted">(Requred)</span></label>
+                        <input type="text" class="form-control" id="postcode" placeholder="J0K 1X0" required="">
+                    </div>
+                </div>
+        
+                <div class="row g-3 mt-2">
+                    <div class="col-sm-6">
+                        <label for="Courriel" class="form-label">Courriel <span class="text-muted">(Requred)</span></label>
+                        <input type="email" class="form-control" id="email" placeholder="you@example.com" required="true">
+                    </div>
+    
+                    <div class="col-sm-6">
+                        <label for="Courriel" class="form-label">Comfirmez Courriel <span class="text-muted">(Requred)</span></label>
+                        <input type="email" class="form-control" id="confirm_email" onmouseleave = "checkEmail()" placeholder="you@example.com" required="true">
+                        <p class="error-info mt-2" style="color: red;"></p>
+                    </div>
+                </div>
+            </div>
+   
+              <hr class="my-4 mt-5">
+<!---------------Ordinateurs marque et prix----------------->    
+              <div class="col-md-5">
+                <label for="price" class="form-label">Quelle marque voulez-vous? <span class="text-muted">(Requred)</span></label>
+                <select class="form-select" id="price">
+                  <option value="Dell-799.99">Dell - 799.99$</option>
+                  <option value="MacBook-1299.99">MacBook - 1299.99$</option>
+                  <option value="Acer-659.99">Acer - 659.99$</option>
+                  <option value="Huawei-1259.99">Huawei - 1259.99$</option>
+                </select>
+              </div>      
+  <!---------------Options----------------->  
+            <label for="form-check" class="form-label mt-2">Cochez les options que voue voulez ajouter : </label>
+            <div id="ckeckList">
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="screen" value="Ecran-300">
+                    <label class="form-check-label" for="screen">Ecran - 300$</label>
+                </div>
+        
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="garantie" value="Garantie-200">
+                    <label class="form-check-label" for="garantie">Garantie - 200$</label>
+                </div>
+
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="printer" value="Imprimant-100">
+                    <label class="form-check-label" for="printer">Imprimant - 100$</label>
+                </div>
+        
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="mouse" value="Souris_sans_fil-40">
+                    <label class="form-check-label" for="mouse">Souris sans fil - 40$</label>
+                </div>
+            </div>
+    
+            <hr class="my-4">
+            <div class="row g-3">
+                <button id = "order" class="col-sm-3 btn btn-primary btn-lg" onclick="submitCommande()" type="button">Commander</button>
+                <span class="col-sm-1 pt-2 text-md-center"> Ou </span>
+                <button id = "restart" class="col-sm-3 btn btn-warning btn-lg" onclick="location.reload();" type="button">Recommencer</button>
+            </div>
+        </form>
+
+    </div>
+
+<!---------------Invoice table version 1----------------->
+
+    <div id="facture" class="container mt-5 mb-5 border border-primary rounded-3 p-4" style="display: none;">
+        <h4 class="mb-3">Voici votre facture:</h4>
+        <h5 class="text-center">Facture achat ordinateur portable</h4>
+        <hr class="my-4">
+        <div>
+            <p>Merci de faire affaire avec nous, <span class="nomclient"></span>.</p>
+            <p>Votre facture sera envoyée à: <span class="postclient"></span>.</p>
+            <p>Et un courriel de cofirmation à: <span class="emailclient"></span>.</p>
+        </div>
+        <hr class="my-4">
+        <table id="invoicetable" class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Element</th>
+                    <th scope="col">Marque</th>
+                    <th scope="col">Prix</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Ordinateur</td>
+                    <td class="marque"></td>
+                    <td class="ordprix"></td>
+                </tr>
+                <tr>
+                    <th colspan="3">Option:</th>
+                </tr>
+            </tbody>
+            </table>
+
+            <table id="optsparent" class="table">
+            <thead id="item">
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Element</th>
+                <th scope="col">Prix</th>
+              </tr>
+            </thead>
+            <tbody id="optionlist">
+            </tbody>
+          </table>
+    </div>  
+    
+    <!---------------Invoice table version 2----------------->
+    <div id="facture-2" class="container mt-5 mb-5 border border-primary rounded-3 p-4" style="display: none;">
+        <h4 class="mb-3">Voici votre facture 2:</h4>
+        <h5 class="text-center">Facture achat ordinateur portable</h4>
+        <hr class="my-4">
+        <div>
+            <p>Merci de faire affaire avec nous, <span class="nomclient"></span>.</p>
+            <p>Votre facture sera envoyée à: <span class="postclient"></span>.</p>
+            <p>Et un courriel de cofirmation à: <span class="emailclient"></span>.</p>
+        </div>
+        <hr class="my-4">
+        <table id="invoicetable" class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Element</th>
+                    <th scope="col">Marque</th>
+                    <th scope="col">Prix</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Ordinateur</td>
+                    <td class="marque"></td>
+                    <td class="ordprix"></td>
+                </tr>
+                <tr>
+                    <th colspan="3">Option:</th>
+                </tr>
+            </tbody>
+            </table>
+
+            <table id="optsparent" class="table">
+            <thead id="item">
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Element</th>
+                <th scope="col">Prix</th>
+              </tr>
+            </thead>
+            <tbody id="optionlist">
+            </tbody>
+          </table>
+    </div>   
+
+    <!---------------JS FUNCTIONS----------------->
+    <script>
+        var inputs = document.querySelectorAll('#infopart input');    //only check the first input part
+        var completeformrequred = false;
+        var nomdeclient, courrielclient, postalclient;
+        //Variables for invoice
+        var ordPrix = 0;
+        var ordItem = "";
+        var optPrix = 0;
+        var optprixtable = [];
+        var optelelist = [];
+        var optsTotal = 0;
+        var total = 0, numbre = 0;
+        var ordobjects = document.querySelectorAll('.form-select option');
+        var optobjects = document.querySelectorAll('#ckeckList input');
+        var selected_ord = "", selected_opt = "", invoiceDiv;
+
+        //Toggle add or remove background when input or lose focus
+        for(var i = 0; i < inputs.length; i++){
+            inputs[i].onfocus = function(){                //onfocus or onclick add style bg color
+                this.style = "background: orange;"
+            }
+            inputs[i].onblur = function(){                 //onblur when lose focus to remove the bg color
+                this.style = "background: none;";
+            }
+        }
+        //Second email input validation
+        var checkEmail = function(){
+            var firstemail = document.querySelector('#email').value;
+            var secondemail = document.querySelector('#confirm_email').value;
+            if(secondemail != firstemail){
+                document.getElementsByClassName('error-info')[0].append("Veuillez vérifier et entrer la meme courriel SVP！");
+            }
+        }
+
+        //Alert notice when uer check the options
+        var optionsNotification = function(){
+            var options = document.querySelectorAll('#ckeckList input');
+            var ckeckedvalue = null;
+            for(var i = 0; i < options.length; i++){ 
+                options[i].addEventListener('click', function(){
+                    ckeckedvalue = this.value;
+                    if (this.checked){
+                        alert("Vous avez choisir: " + this.value + ". Tres bien!!");
+                    } 
+                    else{
+                        alert("Veuillez recocher cette element? " + this.value + "? Êtes-vous sûr de ne pas le vouloir?");
+                    } 
+                })  
+            }
+        }
+        optionsNotification();    //Call the function to check user select options and alert notice
+
+        var getItemData = function(){
+            for(var ordobject of ordobjects){
+                if(ordobject.selected){
+                    selected_ord = ordobject.value;  
+                    ordItem = selected_ord.split('-')[0];
+                    ordPrix = parseFloat(selected_ord.split('-')[1]);
+                }         
+            }
+        }
+
+        var getOptionData = function(){
+            //Create elements for the form options list
+            for(var optobject of optobjects){
+                if(optobject.checked == true){
+                    selected_opt = optobject.value;                     //Get selected option value string
+
+                    optelelist.push(selected_opt.split('-')[0]);      //Get the option name 
+                    optprixtable.push(selected_opt.split('-')[1]);    //Get the option price
+
+                    optPrix = parseFloat(selected_opt.split('-')[1]);  
+                    optsTotal += optPrix;
+
+                    numbre++;
+                }                           
+            } 
+        }
+
+        //Calculate total
+        var calculateTotal = function(){
+            total = ordPrix + optsTotal;
+        }
+
+        invoiceDiv = document.getElementById('facture');
+        //Render invoice
+        var renderInvoice = function(invoiceDiv) {
+            var listparent = invoiceDiv.querySelector('#optsparent').getElementsByTagName('tbody')[0];
+            //Set client info to invoice
+            nomdeclient = inputs[0].value;
+            postalclient = inputs[1].value;
+            courrielclient = inputs[2].value;
+
+            invoiceDiv.querySelector('.nomclient').innerHTML = nomdeclient;
+            invoiceDiv.querySelector('.postclient').innerHTML = postalclient;
+            invoiceDiv.querySelector('.emailclient').innerHTML = courrielclient;  
+
+            //Insert user's order item(ordinateur) data to invoice table
+            invoiceDiv.querySelector('.marque').innerHTML = selected_ord.split('-')[0];
+            invoiceDiv.querySelector('.ordprix').innerHTML = selected_ord.split('-')[1];
+
+            // Insert user's order options data to invoice table
+            for (var i = 0; i < numbre; i++){            
+                var newRow = listparent.insertRow();               // Insert a row at the end of table
+                var newCell = newRow.insertCell();                 // Insert a cell at the end of the row
+                var newText = document.createTextNode(i+1);    // Append a text node to the cell
+                newCell.appendChild(newText);
+
+                var newCell2 = newRow.insertCell();
+                var newText2 = document.createTextNode(optelelist[i]);
+                newCell2.appendChild(newText2);
+
+                var newCell3 = newRow.insertCell();
+                var newText3 = document.createTextNode(optprixtable[i]);
+                newCell3.appendChild(newText3);
+            }
+
+           // Insert a row with total info
+            var newRowTotal = listparent.insertRow();
+            var newCellTotal = newRowTotal.insertCell();
+            var newTextTotal = document.createTextNode("Total");
+            newCellTotal.appendChild(newTextTotal);
+
+            var newCellTotalspace = newRowTotal.insertCell();   //Add empty space to the middle cell
+            // Insert a cell with total
+            var newCellTotalAmount = newRowTotal.insertCell();
+            var newTextTotalAmount = document.createTextNode(total);
+            newCellTotalAmount.appendChild(newTextTotalAmount);
+
+        }
+
+        //Send order with submit button clicked
+        var submitCommande = function(){
+            for(var i = 0; i < inputs.length; i++){
+                if (inputs[i].value == null || inputs[i].value == ""){
+                    completeformrequred = false;
+                    alert("Complete all of the requred field please!!");
+                    break;
+                }     
+                else completeformrequred = true;
+            }
+            if (completeformrequred) {
+                alert("Your order has been submit successfull!!"); 
+                //Generate invoicve
+                getItemData();       
+                getOptionData();   
+                calculateTotal();
+                if(total < 1000){
+                    renderInvoice(invoiceDiv);
+                    document.getElementById('facture').style = "display: block;";  //To display invoice versin 1 after submit success
+                }                
+                else {
+                    invoiceDiv = document.getElementById('facture-2');
+                    document.getElementById('facture-2').style = "display: block;";  //To display invoice versin 2 after submit success
+                    renderInvoice(invoiceDiv);
+                }
+            }  
+        }
+
+    </script>
+    
+  </body>
+</body>
+</html>
