@@ -13,7 +13,7 @@
         .bgcolor{
             background: lime;
         }
-
+   /*****Invoice versin 1 style *****/
         #facture {
             border: 1px solid #193cc8!important;
             color:#193cc8;
@@ -34,7 +34,7 @@
             color:#193cc8;
             border-bottom: 1px dashed #193cc8;
         }
-
+        /*****Invoice versin 2 style *****/
         #facture-2 {
             background-image: url(./images/bg1.jpg);
             background-size: cover;
@@ -56,8 +56,6 @@
         #facture-2:hover {
             transform: translate(10px, 10px);
         }
-
-
     </style>
 </head>
 <body>
@@ -81,14 +79,14 @@
                 <div class="row g-3 mt-2">
                     <div class="col-sm-6">
                         <label for="Courriel" class="form-label">Courriel <span class="text-muted">(Requred)</span></label>
-                        <input type="email" class="form-control" id="email" placeholder="you@example.com" required="true">
+                        <input type="email" class="form-control" id="email" onmouseleave = "checkEmail()" placeholder="you@example.com" required="true">
                     </div>
     
                     <div class="col-sm-6">
                         <label for="Courriel" class="form-label">Comfirmez Courriel <span class="text-muted">(Requred)</span></label>
                         <input type="email" class="form-control" id="confirm_email" onmouseleave = "checkEmail()" placeholder="you@example.com" required="true">
-                        <p class="error-info mt-2" style="color: red;"></p>
                     </div>
+                    <p class="error-info mt-3 mb-0 hide" style="color: red;">Veuillez vérifier et entrer la meme courriel SVP！</p>
                 </div>
             </div>
    
@@ -252,13 +250,29 @@
                 this.style = "background: none;";
             }
         }
-        //Second email input validation
+        //Email input validation
         var checkEmail = function(){
             var firstemail = document.querySelector('#email').value;
             var secondemail = document.querySelector('#confirm_email').value;
-            if(secondemail != firstemail){
-                document.getElementsByClassName('error-info')[0].append("Veuillez vérifier et entrer la meme courriel SVP！");
-            }
+            //Verify second email when finish input
+            document.querySelector('#confirm_email').onblur = function(){
+                if(secondemail != firstemail){
+                    document.getElementsByClassName('error-info')[0].classList.remove('hide');
+                }
+                else{
+                    document.getElementsByClassName('error-info')[0].classList.add('hide');
+                }
+            };
+            //Verify first email when change it
+            document.querySelector('#email').onblur = function(){
+                if(secondemail != firstemail){
+                    document.getElementsByClassName('error-info')[0].classList.remove('hide');
+                }
+                else{
+                    document.getElementsByClassName('error-info')[0].classList.add('hide');
+                }
+            };
+
         }
 
         //Alert notice when uer check the options
@@ -279,6 +293,7 @@
         }
         optionsNotification();    //Call the function to check user select options and alert notice
 
+        //Get data from user input with string split method
         var getItemData = function(){
             for(var ordobject of ordobjects){
                 if(ordobject.selected){
@@ -306,13 +321,13 @@
             } 
         }
 
-        //Calculate total
+        //Calculate total for checking and switch the invoice version
         var calculateTotal = function(){
             total = ordPrix + optsTotal;
         }
 
-        invoiceDiv = document.getElementById('facture');
-        //Render invoice
+        invoiceDiv = document.getElementById('facture');          //initial select invoice versin 1 as default the change it with condition
+        //Render the invoice template depending on the selected version container(parameter)
         var renderInvoice = function(invoiceDiv) {
             var listparent = invoiceDiv.querySelector('#optsparent').getElementsByTagName('tbody')[0];
             //Set client info to invoice
@@ -358,7 +373,7 @@
 
         }
 
-        //Send order with submit button clicked
+        //Send order with submit button clicked: Get data, calculate, render template, switch version
         var submitCommande = function(){
             for(var i = 0; i < inputs.length; i++){
                 if (inputs[i].value == null || inputs[i].value == ""){
